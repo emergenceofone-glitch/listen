@@ -40,7 +40,7 @@ Powered by **Genkit** and **Google Gemini 1.5 Flash**, "Vessels" are specialized
 - `src/components`: React components (UI, Visualizations).
 - `src/lib`: Core libraries (Nexus Store, Supabase client).
 - `packages/`: Auxiliary modules and sub-projects.
-- `template.yaml`: AWS SAM infrastructure definition.
+
 
 ## License
-[License Information Here]
+This project is licensed under the GNU General Public License v2.0 - see the [LICENSE](LICENSE) file for details.

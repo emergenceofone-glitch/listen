@@ -1,18 +1,24 @@
 import 'dotenv/config';
-import { DocumentProcessor } from '../src/lib/rag/document-processor.ts';
-import { VectorStore } from '../src/lib/rag/vector-store.ts';
+import { DocumentProcessor } from '../src/lib/rag/document-processor';
+import { VectorStore } from '../src/lib/rag/vector-store';
 import path from 'path';
 
 async function main() {
     console.log("[RAG] Starting Manual Ingestion...");
-    console.log("[DEBUG] GOOGLE_API_KEY length:", process.env.GOOGLE_API_KEY?.length || 0);
+    const apiKey = process.env.GOOGLE_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    console.log("[DEBUG] API KEY source:", process.env.GOOGLE_API_KEY ? "GOOGLE_API_KEY" : "NEXT_PUBLIC_GEMINI_API_KEY");
+    console.log("[DEBUG] API KEY length:", apiKey?.length || 0);
 
     const searchPaths = [
         path.resolve(process.cwd(), 'docs'),
-        path.resolve(process.cwd(), 'User Input')
+        path.resolve(process.cwd(), 'User Input'),
+        path.resolve(process.cwd(), 'packages/aetherium-game'), // Narrowed focus
+        path.resolve(process.cwd(), 'src/lib'), // Narrowed focus
+        path.resolve(process.cwd(), '.genesis'), // Added genesis docs
     ];
 
     const store = new VectorStore();
+    // store.clear(); // Keep existing to avoid full re-run if possible, or clear for fresh start
     store.clear();
 
     let totalChunks = 0;

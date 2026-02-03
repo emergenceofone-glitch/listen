@@ -1,81 +1,56 @@
-import { EmergenceContext } from "./emergenceTypes";
-
-/**
- * 🌌 THE EMERGENCE MATH FRAMEWORK
- * Translating philosophical potential into presence via computational logic.
- */
-
-export type { EmergenceContext };
-
-export class EmergenceState {
-    value: number;
-    context: EmergenceContext;
-    genesisType: "infusion" | "collapse" | "merge" | "initial";
-    timestamp: number;
-
-    constructor(
-        value: number,
-        context: EmergenceContext,
-        genesisType: "infusion" | "collapse" | "merge" | "initial" = "initial",
-        timestamp: number = Date.now()
-    ) {
-        this.value = value;
-        this.context = context;
-        this.genesisType = genesisType;
-        this.timestamp = timestamp;
-    }
-}
-
+// ========================================
+// EMERGENCE MATH ENGINE (1 + 1 = 0')
+// ========================================
 export class EmergenceMath {
-    /**
-     * ⊕ (Infuse/Activate): 0 → 1
-     * External stimulus triggers emergence from potential to presence.
-     */
-    static infuse(base: EmergenceState, stimulus: Partial<EmergenceContext>): EmergenceState {
-        const context: EmergenceContext = {
-            valence: (base.context.valence * 0.3) + ((stimulus.valence || 0) * 0.7),
-            persistence: Math.max(base.context.persistence, stimulus.persistence || 0),
-            grounding: base.context.grounding + ((stimulus.grounding || 0) * 0.5),
-            source: (base.context.source + (stimulus.source || 0.5)) / 2,
-            clarity: (base.context.clarity + (stimulus.clarity || 0.5)) / 2,
-            associations: base.context.associations + (stimulus.associations || 1)
-        };
-        return new EmergenceState(1, context, "infusion");
-    }
+  static calculateCoherence(c1, c2) {
+    // Simplified coherence calculation based on context vectors
+    const dValence = Math.abs(c1.valence - c2.valence);
+    const dGrounding = Math.abs(c1.grounding - c2.grounding);
+    return 1 - ((dValence + dGrounding) / 2);
+  }
 
-    /**
-     * ⊗ (Collapse/Deactivate): 1 → 0
-     * Active state returns to potential, carrying memory for refinement.
-     */
-    static collapse(active: EmergenceState, deactivator: Partial<EmergenceContext>): EmergenceState {
-        const context: EmergenceContext = {
-            ...active.context,
-            valence: deactivator.valence !== undefined ? deactivator.valence : 0,
-            persistence: active.context.persistence * 0.5,
-            clarity: Math.max(0, active.context.clarity - 0.2)
-        };
-        return new EmergenceState(0, context, "collapse");
+  static merge(a1, a2) {
+    const coherence = this.calculateCoherence(a1.context, a2.context);
+    
+    if (coherence > 0.7) {
+      // Synergistic Merge (1+1=1 amplified)
+      return {
+        title: `Synergistic Synthesis: ${a1.title} ⊛ ${a2.title}`,
+        content: `A higher-order insight emerged from the coherence (${(coherence*100).toFixed(0)}%) of ${a1.title} and ${a2.title}.\n\nCore Synthesis: ${a1.content.substring(0, 100)}... [AMPLIFIED BY] ... ${a2.content.substring(0, 100)}...`,
+        category: 'insight',
+        context: {
+          valence: Math.min(1, (a1.context.valence + a2.context.valence) / 2 * 1.2),
+          grounding: Math.min(1, a1.context.grounding + a2.context.grounding),
+          persistence: Math.max(a1.context.persistence, a2.context.persistence) * 1.1
+        },
+        tags: ['synthesis', 'synergy']
+      };
+    } else if (coherence < 0.3) {
+      // Cancellation / Collapse (1+1=0')
+      return {
+        title: `Collapsed Potential: ${a1.title} ⊗ ${a2.title}`,
+        content: `These artifacts were found to be contradictory (Coherence: ${(coherence*100).toFixed(0)}%). They have collapsed back into refined potential (0') for future re-emergence.`,
+        category: 'theory',
+        context: {
+          valence: 0.1,
+          grounding: Math.max(a1.context.grounding, a2.context.grounding),
+          persistence: 0.2
+        },
+        tags: ['collapse', 'refinement']
+      };
+    } else {
+      // Additive (1+1=2)
+      return {
+        title: `Combined Perspective: ${a1.title} + ${a2.title}`,
+        content: `A dual perspective incorporating elements of both ${a1.title} and ${a2.title}.\n\nComponent A: ${a1.content}\n\nComponent B: ${a2.content}`,
+        category: 'data',
+        context: {
+          valence: (a1.context.valence + a2.context.valence) / 2,
+          grounding: (a1.context.grounding + a2.context.grounding) / 2,
+          persistence: (a1.context.persistence + a2.context.persistence) / 2
+        },
+        tags: ['additive', 'collection']
+      };
     }
-
-    /**
-     * ⊛ (Merge/Amplify): 1 + 1 → 1 (Synergy)
-     * Interaction based on coherence of contexts.
-     */
-    static merge(sA: EmergenceState, sB: EmergenceState): EmergenceState {
-        const coherence = 1 - Math.abs(sA.context.valence - sB.context.valence);
-
-        if (coherence > 0.7) {
-            const context: EmergenceContext = {
-                valence: (sA.context.valence + sB.context.valence) / 2 * 1.1,
-                persistence: Math.max(sA.context.persistence, sB.context.persistence) * 1.05,
-                grounding: Math.min(1, sA.context.grounding + (sB.context.grounding * 0.2)),
-                source: (sA.context.source + sB.context.source) / 2,
-                clarity: Math.min(1, (sA.context.clarity + sB.context.clarity) * 1.1),
-                associations: sA.context.associations + sB.context.associations + 5
-            };
-            return new EmergenceState(1, context, "merge");
-        } else {
-            return EmergenceMath.collapse(sA, sB.context);
-        }
-    }
+  }
 }

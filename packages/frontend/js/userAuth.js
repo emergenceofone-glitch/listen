@@ -30,7 +30,7 @@ class UserAuthManager {
             const state = this.generateState();
 
             // Construct Google OAuth URL
-            const clientId = 'your-google-client-id'; // Replace with actual client ID
+            const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || 'your-google-client-id'; // Use env var if available
             const redirectUri = encodeURIComponent(window.location.origin + '/auth/google/callback');
             const scope = encodeURIComponent('openid email profile');
 
@@ -104,7 +104,7 @@ class UserAuthManager {
                 await fetch(`${this.authEndpoint}/logout`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${this.sessionToken}`,
+                        'Authorization': this.sessionToken ? `Bearer ${this.sessionToken}` : '',
                         'Content-Type': 'application/json',
                     }
                 });
@@ -137,7 +137,7 @@ class UserAuthManager {
             const response = await fetch(`${this.authEndpoint}/validate`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': token ? `Bearer ${token}` : '',
                     'Content-Type': 'application/json',
                 }
             });
@@ -218,7 +218,7 @@ class UserAuthManager {
             // Load user's analysis history
             const analysisResponse = await fetch(`${this.authEndpoint}/user/analysis-history`, {
                 headers: {
-                    'Authorization': `Bearer ${this.sessionToken}`,
+                    'Authorization': this.sessionToken ? `Bearer ${this.sessionToken}` : '',
                     'Content-Type': 'application/json',
                 }
             });
@@ -231,7 +231,7 @@ class UserAuthManager {
             // Load user's writing sessions
             const writingResponse = await fetch(`${this.authEndpoint}/user/writing-sessions`, {
                 headers: {
-                    'Authorization': `Bearer ${this.sessionToken}`,
+                    'Authorization': this.sessionToken ? `Bearer ${this.sessionToken}` : '',
                     'Content-Type': 'application/json',
                 }
             });
@@ -349,7 +349,7 @@ function handleOAuthCallback() {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Handle OAuth callback if present
     handleOAuthCallback();
 

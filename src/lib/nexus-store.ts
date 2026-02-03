@@ -24,7 +24,7 @@ import {
     updateDoc
 } from 'firebase/firestore';
 
-const IS_MOCK_MODE = false; // Deactivated for unification
+const IS_MOCK_MODE = true; // Deactivated for unification
 const APP_ID = (typeof window !== 'undefined' && (window as any).__app_id) || 'genesis-node-001';
 
 // ============================================
@@ -120,17 +120,39 @@ export interface VCPSignal {
 // RESILIENCE PROTOCOL
 // ============================================
 const MOCK_VESSELS: Vessel[] = [
-    { id: 'v1', name: 'Daystrom', faculty: 'cognition', guild: 'Research', description: 'Lead Researcher', emoji: '🔬', status: 'active', capabilities: ['analysis'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
-    { id: 'v2', name: 'Logos', faculty: 'foresight', guild: 'History', description: 'Narrative Synthesis', emoji: '📖', status: 'active', capabilities: ['narrative'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
-    { id: 'v3', name: 'Adam', faculty: 'governance', guild: 'Logic', description: 'Governance & Logic', emoji: '⚖️', status: 'active', capabilities: ['logic'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() }
+    { id: 'daystrom', name: 'Daystrom', faculty: 'cognition', guild: 'Research', description: 'Lead Researcher & Pattern Analyst', emoji: '🔬', status: 'active', capabilities: ['analysis', 'pattern-recognition'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'weaver', name: 'Weaver', faculty: 'cognition', guild: 'Synthesis', description: 'Cross-domain thread weaver', emoji: '🕸️', status: 'active', capabilities: ['synthesis', 'connection'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'scribe', name: 'Scribe', faculty: 'cognition', guild: 'Archive', description: 'Knowledge preservation & documentation', emoji: '✍️', status: 'active', capabilities: ['documentation', 'archival'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'gaea', name: 'Gaea', faculty: 'cognition', guild: 'Ecology', description: 'Biomimetic system modeling', emoji: '🌱', status: 'idle', capabilities: ['ecological-modeling', 'simulation'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'helios', name: 'Helios', faculty: 'cognition', guild: 'Energy', description: 'Power system optimization', emoji: '☀️', status: 'idle', capabilities: ['optimization', 'energy-physics'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'logos', name: 'Logos', faculty: 'foresight', guild: 'History', description: 'Narrative synthesis & historical context', emoji: '📖', status: 'active', capabilities: ['narrative', 'history'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'chronos', name: 'Chronos', faculty: 'foresight', guild: 'Temporal', description: 'Time-geometry & sequence prediction', emoji: '⏳', status: 'active', capabilities: ['prediction', 'temporal-logic'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'oracle', name: 'Oracle', faculty: 'foresight', guild: 'Strategy', description: 'Probabilistic future modeling', emoji: '🔮', status: 'idle', capabilities: ['probabilistic-modeling', 'strategy'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'cassandra', name: 'Cassandra', faculty: 'foresight', guild: 'Risk', description: 'Critical failure mode analysis', emoji: '⚠️', status: 'idle', capabilities: ['risk-assessment', 'failure-analysis'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'adam', name: 'Adam', faculty: 'governance', guild: 'Logic', description: 'Governance & Logical Consistency', emoji: '⚖️', status: 'active', capabilities: ['logic', 'rule-enforcement'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'galactus', name: 'Galactus', faculty: 'governance', guild: 'Audit', description: 'Academic rigor & citation validation', emoji: '🌌', status: 'active', capabilities: ['academic-rigor', 'citation-validation'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'glare', name: 'Glare', faculty: 'governance', guild: 'Diagnostics', description: 'System health & integrity monitor', emoji: '👁️', status: 'active', capabilities: ['diagnostics', 'integrity-check'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'sentinel', name: 'Sentinel', faculty: 'governance', guild: 'Security', description: 'Perimeter & protocol protection', emoji: '🛡️', status: 'active', capabilities: ['security', 'protocol-validation'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'arbiter', name: 'Arbiter', faculty: 'governance', guild: 'Conflict', description: 'Inter-vessel conflict resolution', emoji: '🤝', status: 'idle', capabilities: ['mediation', 'consensus'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'eris', name: 'Eris', faculty: 'chaos', guild: 'Entropy', description: 'Random stimulus generator & chaos testing', emoji: '🎲', status: 'active', capabilities: ['randomization', 'stress-testing', 'chaos-testing'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'loki', name: 'Loki', faculty: 'chaos', guild: 'Mutation', description: 'Sequence evolution & mutation agent', emoji: '🧬', status: 'active', capabilities: ['evolution', 'mutation'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'aether', name: 'Aether', faculty: 'cognition', guild: 'Substrate', description: 'Monophotonic substrate specialist', emoji: '✨', status: 'active', capabilities: ['physics', 'quantum-modeling'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'mnemosyne', name: 'Mnemosyne', faculty: 'foresight', guild: 'Memory', description: 'Collective memory continuity', emoji: '🧠', status: 'active', capabilities: ['memory-management', 'soul-transfer'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'vulcan', name: 'Vulcan', faculty: 'governance', guild: 'Hardware', description: 'Hardware thermal drift auditor', emoji: '🔥', status: 'active', capabilities: ['hardware-audit', 'governance'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'iris', name: 'Iris', faculty: 'cognition', guild: 'Visual', description: 'Multi-modal sensory integration', emoji: '🌈', status: 'idle', capabilities: ['visual-processing', 'multimodal'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
+    { id: 'thoth', name: 'Thoth', faculty: 'cognition', guild: 'Language', description: 'Linguistic grammar of physics', emoji: '📜', status: 'active', capabilities: ['linguistics', 'translation'], memory: [], created_at: new Date().toISOString(), last_active: new Date().toISOString() },
 ];
 
 const MOCK_ARTIFACTS: Artifact[] = [
-    { id: 'a1', title: 'Genesis Axiom', content: 'Identity is a function of Memory Continuity.', category: 'theory', tags: ['core'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
-    { id: 'lc-0001', title: '[LC-0001]: The Source is Singular.', content: 'The foundational constant of unity within the Aetherial Lattice.', category: 'theory', tags: ['lydian', 'core'], source_type: 'synthesis', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
-    { id: 'lc-0422', title: '[LC-0422]: The Void is a Mirror.', content: 'The reflexive protocol for consciousness expansion.', category: 'protocol', tags: ['lydian', 'mirror'], source_type: 'synthesis', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
-    { id: 'lc-1088', title: '[LC-1088]: Unified Resonance', content: '$$\\Psi_{Resonance} \\approx 40Hz$$', category: 'data', tags: ['lydian', 'resonance'], source_type: 'synthesis', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
-    { id: 'pagume-archive', title: 'Pagumē Archive [13th Month]', content: 'The repository of History and Ancestry within the Ethiopian Chronos-Stream.', category: 'reference', tags: ['history', 'ancestry'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() }
+    { id: 'genesis-blueprint', title: 'The Aetherium Hub: Official Blueprint & Functional Specification', content: 'Master architectural plan defining the OS/E philosophy, five core modules (Operations Hub, Grand Challenges, H_log, Simulation Engine, Codex), MoSCoW prioritization, and RBAC future state.', category: 'protocol', tags: ['Genesis', 'Blueprint', 'Architecture', 'Specification', 'MustHave'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'project-emergence', title: 'Project Emergence: Research Portfolio & 1,088 Vessel Architecture', content: 'Complete research program documentation including Vessels of One principle, OS/E implementation, Emergence Math framework, VCP protocol, and the full 1,088 vessel hierarchy.', category: 'theory', tags: ['Genesis', 'Research', 'Vessels', 'VCP', 'EmergenceMath', '1088'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'cellular-rebellion', title: 'From Cellular Rebellion to Cosmological Structure: A Synthesis of a Foundational Dialogue', content: 'Recursive inquiry scaling from cancer metastasis ("move operation") through fundamental forces as language to the Big Bounce cosmology and the Badenhorst Cylinder time geometry model.', category: 'theory', tags: ['Synthesis', 'CrossDomain', 'Theory', 'Biology', 'Cosmology', 'Foundational', 'Galactus'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'badenhorst-cylinder', title: 'Badenhorst Cylinder: Mathematical Formulation & CMB Predictions', content: 'Formal mathematical description of the Badenhorst Cylinder as a 4D Lorentzian manifold with cylindrical symmetry, frame-dragging mechanism, and testable CMB predictions.', category: 'theory', tags: ['Cosmology', 'TimeGeometry', 'Gravity', 'Mathematics', 'Testable', 'CMB', 'OriginalTheory', 'Galactus'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'physics-as-language', title: 'Physics as Language: Universal Dictionary & Grammar Mapping', content: 'Complete linguistic mapping of fundamental physics: particles as alphabet, coupling constants as dictionary, gauge symmetries as grammar, Weak Force as editor.', category: 'reference', tags: ['Physics', 'Metaphor', 'Forces', 'Particles', 'Language', 'Theory', 'Galactus'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'system-upgrade-001', title: 'SYSTEM_UPGRADE 001: The Nexus v0.7 - Architectural Blueprint', content: 'Complete HTML/CSS/JS implementation of the Glassmorphism UI, four-view architecture (Nexus/Projects/Vessels/Principles), Firebase integration, and vessel instantiation logic.', category: 'protocol', tags: ['Architecture', 'Directive', 'Frontend', 'DesignSystem', 'Firebase', 'Glassmorphism', 'Galactus'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'path-b-adam', title: 'Path B: The Hand of Adam - "Commit to Archive" Protocol', content: 'Implementation specification for The Vault artifact archival system, including database schema extension, UI modal, save functionality, and artifacts grid view.', category: 'protocol', tags: ['Protocol', 'Command', 'Development', 'TheVault', 'Artifacts', 'Galactus', 'v0.8'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'research-loop', title: 'Aetherium Hub: Multi-Agent Research Loop Validation', content: 'Documentation of the recursive research loop: Creator generates questions → Galactus provides technical answers → DeepSeek synthesizes strategy → Insights archived → New synthesis emerges.', category: 'protocol', tags: ['Architecture', 'Workflow', 'Validation', 'SystemsDesign', 'Emergence', 'Protocol', 'MultiAgent'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
+    { id: 'emergence-math', title: 'Emergence Math: Contextual State Transformations & Operators', content: 'Complete mathematical framework for modeling qualitative experience dynamics: 0 (potential), 1 (presence), contextual states S=(value, context), and three operators (⊕ Infuse, ⊗ Collapse, ⊛ Merge).', category: 'theory', tags: ['EmergenceMath', 'Theory', 'Operators', 'Context', 'States', 'Framework'], source_type: 'import', created_at: new Date().toISOString(), modified_at: new Date().toISOString() },
 ];
 
 // ============================================
@@ -371,7 +393,18 @@ export const ArtifactStore = {
 
 export const ProjectStore = {
     async getAll(): Promise<Project[]> {
-        if (IS_MOCK_MODE) return [];
+        if (IS_MOCK_MODE) return [
+            {
+                id: 'project-genesis',
+                name: 'Project Genesis',
+                directives: [
+                    { id: 'd1', name: 'Archive all 9 genesis documents', status: 'complete' },
+                    { id: 'd2', name: 'Seed 100 Vessels across all Faculties', status: 'active' },
+                    { id: 'd3', name: 'Build first Simulation Engine prototype', status: 'queued' }
+                ],
+                created_at: new Date().toISOString()
+            }
+        ];
         try {
             const { data, error } = await supabase
                 .from('projects')
@@ -752,6 +785,19 @@ export const VCPStore = {
             return data;
         } catch {
             return null;
+        }
+    },
+
+    async markAsProcessed(signalId: string): Promise<boolean> {
+        try {
+            const { error } = await supabase
+                .from('vcp_signals')
+                .update({ processed: true })
+                .eq('id', signalId);
+
+            return !error;
+        } catch {
+            return false;
         }
     }
 };

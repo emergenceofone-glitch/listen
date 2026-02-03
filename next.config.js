@@ -12,6 +12,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 const nextConfig = {
+  transpilePackages: ['@aetherium/game'],
   async headers() {
     return [
       {
@@ -28,3 +29,4 @@ const nextConfig = {
 };
 
 module.exports = withPWA(nextConfig);
+

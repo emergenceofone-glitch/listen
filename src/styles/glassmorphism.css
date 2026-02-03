@@ -1,0 +1,188 @@
+/* ========================================
+   AETHERIUM NEXUS - GLASSMORPHISM 2.0
+   Premium Design System
+   ======================================== */
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #0a0f14;
+  --bg-mesh-1: rgba(0, 240, 255, 0.08);
+  --bg-mesh-2: rgba(255, 153, 0, 0.06);
+  --glass-bg: rgba(18, 28, 38, 0.75);
+  --glass-bg-dark: rgba(10, 15, 20, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(0, 240, 255, 0.3);
+
+  /* Accent Colors */
+  --neon-blue: #00f0ff;
+  --neon-orange: #ff9900;
+  --neon-green: #00ff99;
+  --neon-purple: #b794f6;
+  --neon-pink: #ff6b9d;
+
+  /* Text */
+  --text-primary: #e8eef4;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* Status */
+  --status-active: #10b981;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+  --status-dormant: #6b7280;
+
+  /* Spacing & Sizing */
+  --sidebar-width: 72px;
+  --header-height: 60px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Glass Components */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: all var(--transition-normal);
+}
+
+.glass-panel:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  width: 100%;
+  transition: all var(--transition-normal);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+}
+
+.glass-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.glass-btn:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.glass-btn.primary {
+  background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+  border: none;
+  color: #000;
+}
+
+/* Context Vector Styles */
+.vector-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+  display: flex;
+}
+
+.vector-segment { 
+  height: 100%; 
+  transition: width 0.5s ease; 
+}
+
+.v-valence { background: var(--neon-purple); }
+.v-grounding { background: var(--neon-blue); }
+.v-persistence { background: var(--neon-green); }
+
+/* Somatic Compass (H.E.N.S.) */
+.somatic-compass {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
+  border: 1px solid var(--glass-border);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  transition: all var(--transition-slow);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.somatic-compass::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--neon-blue);
+  animation: compass-pulse 2s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes compass-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.somatic-inner {
+  width: 8px;
+  height: 8px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--text-primary);
+}
+
+.compass-valence-positive { 
+  --neon-blue: var(--neon-green); 
+  border-color: var(--neon-green); 
+}
+
+.compass-valence-negative { 
+  --neon-blue: var(--status-error); 
+  border-color: var(--status-error); 
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.05); }
+}
