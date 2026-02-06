@@ -1,39 +1,39 @@
 'use server';
 
-import { emergenceMathFlow } from '@/lib/emergence/emergenceFlow';
 import { ContextMatrix } from '@/lib/emergence/emergenceTypes';
 import { VesselStore, ProjectStore } from '@/lib/nexus-store';
-import { generateSynthesis, GenerateSynthesisInput } from '@/ai/flows/generate-synthesis';
-import { reflectVessel, VesselReflectionInput } from '@/ai/flows/reflect-vessel';
-import { analyzeError, AnalyzeErrorInput } from '@/ai/flows/analyze-error';
-import { generateSystemPersonality, GenerateSystemPersonalityInput } from '@/ai/flows/generate-system-personality';
-import { generateLatticeVision, GenerateLatticeVisionInput } from '@/ai/flows/generate-lattice-vision';
+import { agentManager } from '@/lib/agent-manager';
+import { GenerateSynthesisInput } from '@/ai/flows/generate-synthesis';
+import { VesselReflectionInput } from '@/ai/flows/reflect-vessel';
+import { AnalyzeErrorInput } from '@/ai/flows/analyze-error';
+import { GenerateSystemPersonalityInput } from '@/ai/flows/generate-system-personality';
+import { GenerateLatticeVisionInput } from '@/ai/flows/generate-lattice-vision';
 import { DocumentProcessor } from '@/lib/rag/document-processor';
 import { VectorStore } from '@/lib/rag/vector-store';
 import path from 'path';
 
 export async function runEmergenceCheckInAction(input: ContextMatrix): Promise<any> {
-    return await emergenceMathFlow(input);
+    return await agentManager.calculateEmergenceState(input);
 }
 
 export async function generateSynthesisAction(input: GenerateSynthesisInput): Promise<any> {
-    return await generateSynthesis(input);
+    return await agentManager.generateSynthesis(input);
 }
 
 export async function reflectVesselAction(input: VesselReflectionInput): Promise<any> {
-    return await reflectVessel(input);
+    return await agentManager.reflectVessel(input);
 }
 
 export async function analyzeErrorAction(input: AnalyzeErrorInput): Promise<any> {
-    return await analyzeError(input);
+    return await agentManager.analyzeError(input);
 }
 
 export async function generateSystemPersonalityAction(input: GenerateSystemPersonalityInput): Promise<any> {
-    return await generateSystemPersonality(input);
+    return await agentManager.generateSystemPersonality(input);
 }
 
 export async function generateLatticeVisionAction(input: GenerateLatticeVisionInput): Promise<any> {
-    return await generateLatticeVision(input);
+    return await agentManager.generateLatticeVision(input);
 }
 
 export async function ingestDocumentsAction() {
@@ -59,8 +59,6 @@ export async function seedInitialBatchAction() {
 
 export async function bootstrapLatticeAction() {
     console.log("[System] Bootstrapping Lattice...");
-    // We'll implement a simplified bootstrap that matches what we need
-    // Since we know the Firestore paths are tricky, we'll use the ones that work
     const hlog = await VesselStore.getAll(); // Just a dummy call to ensure connectivity
     return { success: true, message: "Lattice initialized in memory/store" };
 }

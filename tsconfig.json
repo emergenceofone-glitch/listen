@@ -25,6 +25,9 @@
                             "paths":  {
                                           "@/*":  [
                                                       "./src/*"
+                                                  ],
+                                          "@aetherium/game/*": [
+                                                      "./packages/aetherium-game/src/*"
                                                   ]
                                       }
                         },
@@ -35,8 +38,7 @@
                     "**/*.tsx"
                 ],
     "exclude":  [
-                    "node_modules",
-                    "packages"
+                    "node_modules"
                 ]
 }
 
