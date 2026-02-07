@@ -34,10 +34,25 @@ const VESSEL_MAPPING: Record<string, string> = {
     cassandra: 'cassandra'
 };
 
+const VESSEL_METADATA: Record<string, { name: string, emoji: string }> = {
+    nexus: { name: 'The Nexus', emoji: '💠' },
+    daystrom: { name: 'Daystrom', emoji: '🔬' },
+    logos: { name: 'Logos', emoji: '📜' },
+    adam: { name: 'Adam', emoji: '👨‍⚖️' },
+    weaver: { name: 'Weaver', emoji: '🕸️' },
+    scribe: { name: 'Scribe', emoji: '✍️' },
+    glare: { name: 'Glare', emoji: '👁️' },
+    galactus: { name: 'Galactus', emoji: '🌌' },
+    eris: { name: 'Eris', emoji: '🍎' },
+    chronos: { name: 'Chronos', emoji: '⏳' },
+    mnemosyne: { name: 'Mnemosyne', emoji: '🧠' },
+    arbiter: { name: 'Arbiter', emoji: '⚖️' },
+    cassandra: { name: 'Cassandra', emoji: '🔮' }
+};
 
 const VesselResponseInputSchema = z.object({
     query: z.string().describe('The user query or message to respond to.'),
-    vesselId: z.string().describe('The vessel ID to use for persona selection (global, daystrom, logos, adam, weaver, scribe, glare, galactus, eris, chronos, mnemosyne, arbiter, cassandra).'),
+    vesselId: z.string().describe('The vessel ID to use for persona selection.'),
     context: z.string().optional().describe('Optional conversation context or relevant background information.'),
     artifacts: z.array(z.string()).optional().describe('Optional list of relevant artifact summaries for context.'),
 });
@@ -69,6 +84,7 @@ const vesselResponseFlow = ai.defineFlow(
     },
     async (input) => {
         const promptId = VESSEL_MAPPING[input.vesselId] || 'nexus';
+        const metadata = VESSEL_METADATA[promptId] || VESSEL_METADATA.nexus;
 
         // RAG RETRIEVAL
         let retrievedArtifacts: string[] = input.artifacts || [];
@@ -105,7 +121,7 @@ const vesselResponseFlow = ai.defineFlow(
 
         // Extract potential tags from the response
         const suggestedTags: string[] = [];
-        const tagPatterns = ['synthesis', 'analysis', 'pattern', 'insight', 'strategy', 'ethics', 'history'];
+        const tagPatterns = ['synthesis', 'analysis', 'pattern', 'insight', 'strategy', 'ethics', 'history', 'rigor', 'foresight'];
         tagPatterns.forEach(tag => {
             if (text?.toLowerCase().includes(tag)) {
                 suggestedTags.push(tag);
@@ -114,8 +130,8 @@ const vesselResponseFlow = ai.defineFlow(
 
         return {
             response: text || 'The vessel remains silent. Please try again.',
-            vesselName: promptId.charAt(0).toUpperCase() + promptId.slice(1),
-            vesselEmoji: '💠', // Placeholder as emoji is now inside prompt if needed, or we can look it up
+            vesselName: metadata.name,
+            vesselEmoji: metadata.emoji,
             suggestedTags: suggestedTags.length > 0 ? suggestedTags : undefined,
             resonanceScore,
             citations: citations.length > 0 ? citations : undefined
