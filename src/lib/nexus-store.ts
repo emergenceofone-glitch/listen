@@ -24,7 +24,7 @@ import {
     updateDoc
 } from 'firebase/firestore';
 
-const IS_MOCK_MODE = true; // Deactivated for unification
+const IS_MOCK_MODE = false; // Deactivated for unification
 const APP_ID = (typeof window !== 'undefined' && (window as any).__app_id) || 'genesis-node-001';
 
 // ============================================
@@ -163,12 +163,13 @@ export const VesselStore = {
     async getAll(): Promise<Vessel[]> {
         if (IS_MOCK_MODE) return MOCK_VESSELS;
         try {
-            const vesselsRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'vessels');
-            const q = query(vesselsRef, orderBy('name'));
-            const snapshot = await getDocs(q);
+            const { data, error } = await supabase
+                .from('vessels')
+                .select('*')
+                .order('name');
 
-            if (snapshot.empty) return MOCK_VESSELS;
-            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Vessel));
+            if (error || !data || data.length === 0) return MOCK_VESSELS;
+            return data as Vessel[];
         } catch {
             return MOCK_VESSELS;
         }
@@ -304,12 +305,13 @@ export const ArtifactStore = {
     async getAll(): Promise<Artifact[]> {
         if (IS_MOCK_MODE) return MOCK_ARTIFACTS;
         try {
-            const artifactsRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'artifacts');
-            const q = query(artifactsRef, orderBy('created_at', 'desc'));
-            const snapshot = await getDocs(q);
+            const { data, error } = await supabase
+                .from('artifacts')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-            if (snapshot.empty) return MOCK_ARTIFACTS;
-            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Artifact));
+            if (error || !data || data.length === 0) return MOCK_ARTIFACTS;
+            return data as Artifact[];
         } catch {
             return MOCK_ARTIFACTS;
         }
@@ -666,12 +668,14 @@ export const HLogStore = {
     async getRecent(limitNum = 50): Promise<HLogEvent[]> {
         if (IS_MOCK_MODE) return [];
         try {
-            const hlogRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'hlog_events');
-            const q = query(hlogRef, orderBy('created_at', 'desc'), firestoreLimit(limitNum));
-            const snapshot = await getDocs(q);
+            const { data, error } = await supabase
+                .from('hlog_events')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(limitNum);
 
-            if (snapshot.empty) return [];
-            return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HLogEvent));
+            if (error || !data) return [];
+            return data as HLogEvent[];
         } catch {
             return [];
         }

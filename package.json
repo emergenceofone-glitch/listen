@@ -12,8 +12,10 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
+		"@ai-sdk/xai": "^3.0.50",
 		"@coral-xyz/anchor": "^0.32.1",
 		"@ducanh2912/next-pwa": "^10.2.9",
+		"@genkit-ai/compat-oai": "^1.28.0",
 		"@genkit-ai/core": "^1.27.0",
 		"@genkit-ai/google-genai": "^1.27.0",
 		"@google/generative-ai": "^0.24.1",
@@ -26,6 +28,7 @@
 		"@solana/web3.js": "^1.98.4",
 		"@supabase/supabase-js": "^2.39.0",
 		"@types/dompurify": "^3.0.5",
+		"ai": "^6.0.79",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.0.0",
 		"cosine-similarity": "^1.0.1",

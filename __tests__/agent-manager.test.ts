@@ -14,6 +14,20 @@ vi.mock('../src/lib/nexus-store', () => ({
     },
 }));
 
+// Mock AI flows to prevent Genkit initialization during tests
+vi.mock('@/ai/flows/generate-code', () => ({ generateCode: vi.fn() }));
+vi.mock('@/ai/flows/generate-test-suite', () => ({ generateTestSuite: vi.fn() }));
+vi.mock('@/ai/flows/generate-multi-modal-workflow', () => ({ generateMultiModalWorkflow: vi.fn() }));
+vi.mock('@/ai/flows/generate-enhanced-analysis', () => ({ generateEnhancedAnalysis: vi.fn() }));
+vi.mock('@/ai/flows/generate-narrative', () => ({ generateNarrative: vi.fn() }));
+vi.mock('@/ai/flows/generate-synthesis', () => ({ generateSynthesis: vi.fn() }));
+vi.mock('@/ai/flows/reflect-vessel', () => ({ reflectVessel: vi.fn() }));
+vi.mock('@/ai/flows/analyze-error', () => ({ analyzeError: vi.fn() }));
+vi.mock('@/ai/flows/generate-system-personality', () => ({ generateSystemPersonality: vi.fn() }));
+vi.mock('@/ai/flows/generate-lattice-vision', () => ({ generateLatticeVision: vi.fn() }));
+vi.mock('@/ai/flows/vessel-response', () => ({ generateVesselResponse: vi.fn() }));
+vi.mock('@/lib/emergence/emergenceFlow', () => ({ emergenceMathFlow: vi.fn() }));
+
 // We need an actual function reference for dispatch tests
 const mockFlow = vi.fn();
 
