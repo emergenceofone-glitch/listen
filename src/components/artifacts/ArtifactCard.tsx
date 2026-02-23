@@ -43,7 +43,7 @@ export function ArtifactCard({
                 artifact.id,
                 artifact.content,
                 artifactType,
-                artifact.vessel_id || 'unknown',
+                (artifact as any).vessel_id || 'unknown',
                 wallet
             );
 

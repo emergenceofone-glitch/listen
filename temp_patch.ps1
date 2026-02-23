@@ -13,10 +13,9 @@ $new1 = 'Intelligence does not emerge from processing power alone; it emerges fr
                             <div className="mt-8 glass-panel border-dashed border-[rgba(0,240,255,0.2)]">
                                 <h3 className="text-[var(--neon-blue)] font-medium mb-4">System Documentation</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <a 
-                                        href="https://github.com/molleradrian/Emergence/blob/main/docs/creative/Development/Aetherium_System/CORE_THEORY.md" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
+                                                                        <a
+                                                                            href="https://github.com/emergenceofone/Emergence/blob/main/docs/creative/Development/Aetherium_System/CORE_THEORY.md" 
+                                                                            target="_blank"                                        rel="noopener noreferrer"
                                         className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] hover:bg-[rgba(0,240,255,0.05)] border border-[rgba(255,255,255,0.1)] transition-all group"
                                     >
                                         <div className="flex items-center gap-3">
@@ -27,10 +26,9 @@ $new1 = 'Intelligence does not emerge from processing power alone; it emerges fr
                                             </div>
                                         </div>
                                     </a>
-                                    <a 
-                                        href="https://github.com/molleradrian/Emergence/blob/main/docs/creative/Development/Aetherium_System/AXIOMS.md" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
+                                                                        <a
+                                                                            href="https://github.com/emergenceofone/Emergence/blob/main/docs/creative/Development/Aetherium_System/AXIOMS.md"      
+                                                                            target="_blank"                                        rel="noopener noreferrer"
                                         className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] hover:bg-[rgba(0,240,255,0.05)] border border-[rgba(255,255,255,0.1)] transition-all group"
                                     >
                                         <div className="flex items-center gap-3">

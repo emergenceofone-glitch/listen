@@ -5,14 +5,14 @@ async function verify() {
 
     try {
         console.log("\n1. Testing queryProjects('list_all')...");
-        const allProjects = await agentManager.queryProjects('list_all');
+        const allProjects = await agentManager.queryProjects('list_all') as any[];
         console.log(`   Found ${allProjects.length} projects.`);
         if (allProjects.length > 0) {
             console.log(`   First project: ${allProjects[0].name} (${allProjects[0].id})`);
         }
 
         console.log("\n2. Testing queryProjects('by_tag', 'Helios')...");
-        const heliosProjects = await agentManager.queryProjects('by_tag', 'Helios');
+        const heliosProjects = await agentManager.queryProjects('by_tag', 'Helios') as any[];
         console.log(`   Found ${heliosProjects.length} matches.`);
 
         console.log("\n3. Testing Error Recording (simulated dispatch failure)...");

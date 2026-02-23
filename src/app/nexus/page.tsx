@@ -7,8 +7,8 @@ import { generateVesselResponse } from '@/ai/flows/vessel-response';
 import { WalletButton } from '@/components/solana/WalletButton';
 import { ArtifactCard } from '@/components/artifacts/ArtifactCard';
 import { VCPSignalWidget } from '@/components/nexus/VCPSignalWidget';
-import { EmotionCheckIn } from '@aetherium/game/ui/EmotionCheckIn';
-import { EmergenceContext } from '@aetherium/game/emergenceFlow';
+import { EmotionCheckIn } from '@/components/nexus/EmotionCheckIn';
+import { EmergenceContext } from '@/lib/emergence/emergenceTypes';
 
 type ViewId = 'nexus' | 'projects' | 'vessels' | 'vault' | 'mirror' | 'hlog' | 'principles';
 
@@ -55,7 +55,7 @@ export default function NexusPage() {
         const userMessage: Message = { id: crypto.randomUUID(), text: inputValue, type: 'user', timestamp: new Date() };
         setMessages(prev => [...prev, userMessage]); setInputValue(''); setIsLoading(true);
         try {
-            const response = await generateVesselResponse({ prompt: userMessage.text, vesselId: selectedVessel });
+            const response = await generateVesselResponse({ query: userMessage.text, vesselId: selectedVessel });
             const aiMessage: Message = { id: crypto.randomUUID(), text: response.response, type: 'ai', vessel: response.vesselName, vesselEmoji: response.vesselEmoji, timestamp: new Date() };
             setMessages(prev => [...prev, aiMessage]);
             await HLogStore.record('insight', `${response.vesselName} responded to query`);
@@ -71,7 +71,7 @@ export default function NexusPage() {
     function handleVesselClick(vesselId: string) { setSelectedVessel(vesselId); setCurrentView('nexus'); }
 
     async function handleVectorSync(context: EmergenceContext, notes: string) {
-        await HLogStore.add({ vessel: 'System', vesselEmoji: '⚙️', action: 'VECTOR_SYNC', details: `Valence: ${context.valence.toFixed(2)}, Grounding: ${context.grounding.toFixed(2)}, Notes: ${notes}`, timestamp: new Date() });
+        await HLogStore.record('system', `VECTOR_SYNC: Valence: ${context.valence.toFixed(2)}, Grounding: ${context.grounding.toFixed(2)}, Notes: ${notes}`);
         setPulse(95); setTimeout(() => setPulse(72), 1000); setShowCalibrator(false); loadData();
     }
     const filteredArtifacts = artifacts.filter(a => a.title.toLowerCase().includes(searchQuery.toLowerCase()) || a.content.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -151,7 +151,7 @@ export default function NexusPage() {
                                 <button onClick={seedGenesis} className="glass-btn-primary">{vessels.length > 0 ? 'Reseed Batch' : 'Seed Genesis Batch'}</button>
                             </div>
                         </div>
-                        {showCalibrator && (<div className="mb-8 flex justify-center animate-fade-in"><EmotionCheckIn onCheckIn={handleVectorSync} /></div>)}
+                        {showCalibrator && (<div className="mb-8 flex justify-center animate-fade-in"><CheckInView onResult={(res) => handleVectorSync(res.context, 'System Calibration')} /></div>)}
                         {vessels.length === 0 ? (<div className="glass-panel text-center py-12"><div className="text-4xl mb-4 opacity-50">👥</div><p className="text-[var(--text-muted)]">No vessels instantiated.</p></div>) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {vessels.map((v) => (
@@ -211,8 +211,8 @@ export default function NexusPage() {
                         <div className="mt-8 glass-panel border-dashed border-[rgba(0,240,255,0.2)]">
                             <h3 className="text-[var(--neon-blue)] font-medium mb-4">System Documentation</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <a href="https://github.com/molleradrian/Emergence/blob/main/docs/creative/Development/Aetherium_System/CORE_THEORY.md" target="_blank" className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,240,255,0.05)] transition-all">📐 Core Theory</a>
-                                <a href="https://github.com/molleradrian/Emergence/blob/main/docs/creative/Development/Aetherium_System/AXIOMS.md" target="_blank" className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,240,255,0.05)] transition-all">📜 Axioms</a>
+                                <a href="https://github.com/emergenceofone/Emergence/blob/main/docs/creative/Development/Aetherium_System/CORE_THEORY.md" target="_blank" className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,240,255,0.05)] transition-all">📐 Core Theory</a>
+                                <a href="https://github.com/emergenceofone/Emergence/blob/main/docs/creative/Development/Aetherium_System/AXIOMS.md" target="_blank" className="p-4 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,240,255,0.05)] transition-all">📜 Axioms</a>
                             </div>
                         </div>
                     </div>

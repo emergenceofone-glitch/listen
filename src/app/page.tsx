@@ -33,7 +33,7 @@ import { GatewayController } from '@/components/GatewayController';
 import EvolutionTerminal from '@/components/nexus/EvolutionTerminal';
 import { PortalView } from '@/components/nexus/PortalView';
 
-type ViewId = 'portal' | 'nexus' | 'projects' | 'vessels' | 'vault' | 'mirror' | 'hlog' | 'principles' | 'simulations' | 'codex' | 'lattice' | 'rebound' | 'vision' | 'evolution';
+type ViewId = 'portal' | 'nexus' | 'projects' | 'vessels' | 'vault' | 'mirror' | 'hlog' | 'principles' | 'simulations' | 'codex' | 'lattice' | 'rebound' | 'vision' | 'evolution' | 'checkin';
 
 interface Message {
     id: string;

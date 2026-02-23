@@ -29,8 +29,8 @@ export class HENSProtocol {
     
     // Apply 90-second rule - after 90s, emotion should naturally decay
     const emotionAge = now - (this.emotionStartTime || now);
-    const decayFactor = emotionAge > this.EMOTION_LIFESPAN ? 
-      Math.max(0.1, 1 - ((emotionAge - this.EMOTION_LIFESPAN) / this.EMOTION_LIFESPAN)) : 1;
+    const decayFactor = emotionAge > HENSProtocol.EMOTION_LIFESPAN ? 
+      Math.max(0.1, 1 - ((emotionAge - HENSProtocol.EMOTION_LIFESPAN) / HENSProtocol.EMOTION_LIFESPAN)) : 1;
     
     this.currentState = {
       valence: this.normalizeValue(valence * decayFactor),
@@ -49,7 +49,7 @@ export class HENSProtocol {
   // Check if current emotion has exceeded natural lifespan
   isEmotionPersisting(): boolean {
     if (!this.emotionStartTime) return false;
-    return (Date.now() - this.emotionStartTime) > this.EMOTION_LIFESPAN;
+    return (Date.now() - this.emotionStartTime) > HENSProtocol.EMOTION_LIFESPAN;
   }
 
   // Get compass visual state for UI

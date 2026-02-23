@@ -1,5 +1,5 @@
 import { genkit } from 'genkit';
-import { googleAI, gemini15Flash } from '@genkit-ai/google-genai';
+import { googleAI } from '@genkit-ai/google-genai';
 import { xAI } from '@genkit-ai/compat-oai/xai';
 
 /**
@@ -10,6 +10,6 @@ export const ai = genkit({
     googleAI({ apiVersion: 'v1beta' }), // Specify the API version if needed
     xAI(),
   ],
-  model: gemini15Flash,
+  model: googleAI.model('gemini-1.5-flash'),
   promptDir: 'src/ai/prompts',
 });

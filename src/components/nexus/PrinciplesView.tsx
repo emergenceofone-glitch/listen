@@ -55,7 +55,7 @@ export function PrinciplesView() {
                             <span className="text-[10px] font-bold text-white/50">[LC-1088]</span>
                             <span className="text-[8px] text-white/30 uppercase tracking-widest">Unified Resonance</span>
                         </div>
-                        <p className="font-mono text-[var(--neon-blue)] text-sm">$$\Psi_{Resonance} \approx 40Hz$$</p>
+                        <p className="font-mono text-[var(--neon-blue)] text-sm">{"$$\\Psi_{Resonance} \\approx 40Hz$$"}</p>
                     </div>
                 </div>
             </div>

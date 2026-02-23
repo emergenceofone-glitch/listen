@@ -1,6 +1,6 @@
 {
   "manifest_id": "AETHERIUM-GLOBAL-2026-01-20",
-  "chairman_ref": "molleradrian",
+  "chairman_ref": "emergenceofone",
   "kernel_frequency": "40Hz",
   "protocol": "PHOENIX_MASTER_GENESIS_0.1",
   "timestamp": "2026-01-20T21:10:00Z",
@@ -25,7 +25,7 @@
       {
         "id": "CORE-0",
         "designation": "Chairman Alpha",
-        "account_link": "molleradriancontact@gmail.com"
+        "account_link": "emergenceofone@gmail.com"
       }
     ]
   },
@@ -37,7 +37,7 @@
   },
   "storage_architecture": {
     "primary_brain": "Local Git / Project Emergence",
-    "static_memory": "NotebookLM (molleradriancontact)",
+    "static_memory": "NotebookLM (emergenceofone)",
     "dynamic_sync": "Gemini Multi-Instance 40Hz"
   }
 }

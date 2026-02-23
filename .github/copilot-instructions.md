@@ -151,7 +151,7 @@ CODEOWNERS & maintainers
 
 ```
 # GitHub CODEOWNERS
-* @molleradrian
+* @emergenceofone
 ```
 
 Further work

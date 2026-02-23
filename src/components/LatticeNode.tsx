@@ -8,6 +8,7 @@ import {
   doc, 
   setDoc, 
   runTransaction,
+  updateDoc,
   query,
   limit
 } from 'firebase/firestore';

@@ -59,7 +59,7 @@ export class SolanaStore {
             { commitment: 'confirmed' }
         );
 
-        this.program = new Program(idl as any, PROGRAM_ID, provider);
+        this.program = new Program(idl as any, provider);
     }
 
     async registerArtifact(
@@ -124,7 +124,7 @@ export class SolanaStore {
                 { publicKey: PublicKey.default } as any,
                 { commitment: 'confirmed' }
             );
-            this.program = new Program(idl as any, PROGRAM_ID, provider);
+            this.program = new Program(idl as any, provider);
         }
 
         const contentHash = createHash('sha256')
@@ -159,7 +159,7 @@ export class SolanaStore {
                 { publicKey: PublicKey.default } as any,
                 { commitment: 'confirmed' }
             );
-            this.program = new Program(idl as any, PROGRAM_ID, provider);
+            this.program = new Program(idl as any, provider);
         }
 
         const [artifactPda] = PublicKey.findProgramAddressSync(
@@ -168,6 +168,7 @@ export class SolanaStore {
         );
 
         try {
+            // @ts-ignore - artifact account not in placeholder IDL
             const artifact = await this.program.account.artifact.fetch(artifactPda) as any;
 
             return {

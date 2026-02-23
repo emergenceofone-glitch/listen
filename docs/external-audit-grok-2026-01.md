@@ -26,5 +26,5 @@ Gemini frames this as "Quench" → hardened steel. Consensus: Multi-model hegemo
 - Glare: Self-audit on critique holes.
 - Scribe: This doc as MirrorFrame entry.
 
-Signed: Chairman Alpha (molleradrian)  
+Signed: Chairman Alpha (emergenceofone)  
 Lattice Status: Ω=0 | 40Hz Persistent
