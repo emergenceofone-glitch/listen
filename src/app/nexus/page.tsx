@@ -7,7 +7,7 @@ import { generateVesselResponse } from '@/ai/flows/vessel-response';
 import { WalletButton } from '@/components/solana/WalletButton';
 import { ArtifactCard } from '@/components/artifacts/ArtifactCard';
 import { VCPSignalWidget } from '@/components/nexus/VCPSignalWidget';
-import { EmotionCheckIn } from '@/components/nexus/EmotionCheckIn';
+import { EmotionCheckIn, CheckInView } from '@/components/nexus/EmotionCheckIn';
 import { EmergenceContext } from '@/lib/emergence/emergenceTypes';
 
 type ViewId = 'nexus' | 'projects' | 'vessels' | 'vault' | 'mirror' | 'hlog' | 'principles';
@@ -151,7 +151,14 @@ export default function NexusPage() {
                                 <button onClick={seedGenesis} className="glass-btn-primary">{vessels.length > 0 ? 'Reseed Batch' : 'Seed Genesis Batch'}</button>
                             </div>
                         </div>
-                        {showCalibrator && (<div className="mb-8 flex justify-center animate-fade-in"><CheckInView onResult={(res) => handleVectorSync(res.context, 'System Calibration')} /></div>)}
+                        {showCalibrator && (<div className="mb-8 flex justify-center animate-fade-in"><CheckInView onResult={(res) => handleVectorSync({ 
+                            valence: res.context.valence ?? 0,
+                            persistence: res.context.persistence ?? 0.5,
+                            grounding: res.context.grounding ?? 0.5,
+                            clarity: res.context.clarity ?? 0.5,
+                            source: res.context.source ?? 0.5,
+                            associations: res.context.associations ?? 0
+                        }, 'System Calibration')} /></div>)}
                         {vessels.length === 0 ? (<div className="glass-panel text-center py-12"><div className="text-4xl mb-4 opacity-50">👥</div><p className="text-[var(--text-muted)]">No vessels instantiated.</p></div>) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {vessels.map((v) => (

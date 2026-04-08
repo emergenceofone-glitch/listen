@@ -9,7 +9,7 @@ export interface SomaticState {
 }
 
 export class HENSProtocol {
-  private static readonly EMOTION_LIFESPAN = 90000; // 90 seconds in ms
+  static readonly EMOTION_LIFESPAN = 90000; // 90 seconds in ms
   private emotionStartTime: number | null = null;
   private currentState: SomaticState = {
     valence: 0.5,

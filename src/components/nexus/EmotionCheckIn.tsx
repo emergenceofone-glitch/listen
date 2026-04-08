@@ -106,3 +106,17 @@ export const EmotionCheckIn: React.FC<EmotionCheckInProps> = ({ onCheckIn, initi
     </div>
   );
 };
+
+interface CheckInViewProps {
+  onResult: (result: { context: Partial<EmergenceContext> }) => void;
+  initialContext?: Partial<EmergenceContext>;
+}
+
+export const CheckInView: React.FC<CheckInViewProps> = ({ onResult, initialContext }) => {
+  return (
+    <EmotionCheckIn
+      initialContext={initialContext}
+      onCheckIn={(context) => onResult({ context })}
+    />
+  );
+};
